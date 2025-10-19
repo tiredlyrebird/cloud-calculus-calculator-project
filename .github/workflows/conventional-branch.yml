@@ -1,0 +1,24 @@
+name: Conventional Branch
+
+on:
+  pull_request:
+    branches: 'main'
+
+jobs:
+  commit-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}  # Checkout PR branch
+          fetch-depth: 0  # Required for merge-base checks
+      - uses: commit-check/commit-check-action@v2
+        with:
+          message: false
+          branch: true
+          author-name: false
+          author-email: false
+          job-summary: true
+          pr-comments: false
