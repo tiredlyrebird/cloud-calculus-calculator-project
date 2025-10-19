@@ -1,0 +1,15 @@
+name: .NET Lint
+
+on:
+  pull_request:
+    branches: 'main'
+
+jobs:
+  run-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: zyactions/dotnet-lint@v1
+        with:
+          workspace: app/CloudCalculusCalculator/CloudCalculusCalculator.csproj
+          implicit-restore: true
