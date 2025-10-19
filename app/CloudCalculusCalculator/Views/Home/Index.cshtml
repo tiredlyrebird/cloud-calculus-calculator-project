@@ -4,10 +4,10 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Algebra Calculator</h1>
+    <h1 class="display-4">Solve for X</h1>
 
     <form method="post">
-        <math-field id="mathfield"></math-field>
+        <math-field placeholder="\text{Enter a formula}" id="mathfield"></math-field>
         <input asp-for="Equation" type="hidden" id="mathfieldExtract"/>
         <input type="submit" value="Solve" id="submit">
     </form>
@@ -22,7 +22,7 @@
     const submit = document.getElementById('submit');
 
     //Create a delegate that copies data from the math field into the hidden extraction input field
-    const extractMathField = () => mathFieldExtract.value = mathField.getValue('latex'); //can also be 'math-json' depending on what we need
+    const extractMathField = () => mathFieldExtract.value = mathField.getValue('math-json');
 
     //Subscribe to event when submit is pressed to copy the math field value
     submit.addEventListener('submit', extractMathField); 
