@@ -13,9 +13,17 @@ namespace CloudCalculusCalculator.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index() //On load
         {
-            return View();
+            return View(new EquationViewModel()); //Start with a new EquationViewModel object
+        }
+        [HttpPost]
+        public IActionResult Index(EquationViewModel model)
+        {
+            string equation = model.Equation != null ? model.Equation : "";
+            model.Result = equation; //simply output the equation received for now
+            return View(model);
         }
 
         public IActionResult Privacy()

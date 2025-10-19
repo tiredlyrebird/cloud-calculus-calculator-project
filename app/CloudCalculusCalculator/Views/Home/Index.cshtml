@@ -1,8 +1,34 @@
-﻿@{
+﻿@model CloudCalculusCalculator.Models.EquationViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Algebra Calculator</h1>
+
+    <form method="post">
+        <math-field id="mathfield"></math-field>
+        <input asp-for="Equation" type="hidden" id="mathfieldExtract"/>
+        <input type="submit" value="Solve" id="submit">
+    </form>
+
+    <p>@Model.Result</p>
 </div>
+
+<script>
+    //Get the references to the elements
+    const mathField = document.getElementById('mathfield');
+    const mathFieldExtract = document.getElementById('mathfieldExtract');
+    const submit = document.getElementById('submit');
+
+    //Create a delegate that copies data from the math field into the hidden extraction input field
+    const extractMathField = () => mathFieldExtract.value = mathField.getValue('latex'); //can also be 'math-json' depending on what we need
+
+    //Subscribe to event when submit is pressed to copy the math field value
+    submit.addEventListener('submit', extractMathField); 
+
+    //Subscribe to event when math field reports an input change to copy the value to the hidden form control
+    //Technically redundant, but will save us in cases where the submit event wasn't fired to submit the form
+    mathField.addEventListener('input', extractMathField); 
+</script>
+
