@@ -20,7 +20,7 @@
 name: Build and deploy ASP.Net Core app to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: cloud-calculus-calculator    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_NAME: cloudcalculus    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: './app/CloudCalculusCalculator'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '8'                 # set this to the .NET Core version to use
 
@@ -57,14 +57,13 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/myapp
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     permissions:
@@ -80,7 +79,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-          path: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/myapp
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
