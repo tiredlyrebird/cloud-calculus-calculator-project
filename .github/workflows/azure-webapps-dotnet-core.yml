@@ -65,6 +65,11 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+        
+      - name: list-files
+        run: |
+          ls
+          ls ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp
 
   deploy:
     permissions:
